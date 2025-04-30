@@ -6,7 +6,7 @@
 #include "game_mechanics.h"
 using namespace std;
 
-// 打字效果
+// Typing Effect
 void typeText(const string& text, int msPerChar) {
     for (char c : text) {
         cout << c << flush;
@@ -16,34 +16,34 @@ void typeText(const string& text, int msPerChar) {
 
 // Main Menu
 void displayMenu() {
-    cout << "\n主菜单：\n";
-    cout << "1. 出发\n2. 规则\n3. 保存并退出\n";
+    cout << "\nMain Menu：\n";
+    cout << "1. Departure\n2. Rule\n3. Save and Exit\n";
 }
 
-// 显示星球背景和效果
+// Display Planet Background and Effects
 void displayPlanetBackground(const Planet& planet) {
     typeText(planet.background + "\n", 50);
-    cout << "星球效果：" << planet.effect << "\n";
+    cout << "Planet Effects：" << planet.effect << "\n";
 }
 
-// 战斗规则
+// Battle Rules
 void displayCombatRules() {
-    cout << "\n============================ 战斗规则 ================================\n";
-    cout << "你与怪物进行回合制战斗，每次选择以下行动：\n";
-    cout << "1. 攻击（A）：\n";
-    cout << "   - 怪物选择治疗（H）：造成全额伤害（你的攻击力）。\n";
+    cout << "\n============================ Battle Rules ================================\n";
+    cout << "You engage in turn-based combat with monsters, choosing the following actions each time：\n";
+    cout << "1. ATTACT（A）：\n";
+    cout << "   - Monster Selects Heal (H): Deals full damage (equal to your Attack Power).\n";
     cout << "   - 怪物选择攻击（A）：双方造成一半伤害。\n";
     cout << "   - 怪物选择防御（D）：怪物反弹，你受到 1/4 攻击力伤害。\n";
     cout << "   - 10% 概率触发会心一击，伤害增加50%。\n";
-    cout << "2. 防御（D）：\n";
+    cout << "2. DEFEND（D）：\n";
     cout << "   - 怪物选择攻击（A）：怪物被反弹，受到 1/4 你的攻击力伤害。\n";
     cout << "   - 怪物选择治疗（H）：怪物恢复 10% 生命值。\n";
     cout << "   - 10% 概率触发完美格挡，反弹伤害翻倍。\n";
-    cout << "3. 治疗（H）：恢复10%最大生命值。\n";
+    cout << "3. HEAL（H）：恢复10%最大生命值。\n";
     cout << "   - 怪物选择防御（D）：治疗生效。\n";
     cout << "   - 怪物选择攻击（A）：你受到全额怪物伤害。\n";
-    cout << "4. 药水（P）：恢复50%最大生命值，需消耗背包中的 Healing Potion。\n";
-    cout << "5. 攻击药水（X）：提升50%攻击力，持续整场战斗，需消耗 Attack Potion。\n";
+    cout << "4. POTION（P）：恢复50%最大生命值，需消耗背包中的 Healing Potion。\n";
+    cout << "5. ATTACK POTION（X）：提升50%攻击力，持续整场战斗，需消耗 Attack Potion。\n";
     cout << "\n";
     cout << "怪物随机选择A、D、H三种行动。";
     cout << "\n";
