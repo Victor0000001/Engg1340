@@ -8,44 +8,44 @@
 #include "game_mechanics.h"
 using namespace std;
 
-// 主函数，游戏入口
+// Main function, the entrance to the game
 int main() {
-    setlocale(LC_ALL, "en_US.UTF-8"); // 设置 UTF-8 编码
-    srand(time(0)); // 初始化随机种子
+    setlocale(LC_ALL, "en_US.UTF-8"); // Set UTF-8 encoding
+    srand(time(0));// Initialize random seed
 
-    // 显示标题
+    // Show the title
     cout << "\n=========================================\n";
-    cout << "              星际能源探秘              \n";
+    cout << "              Star Energy Mystery             \n";
     cout << "=========================================\n";
-    cout << "按 Enter 键开始游戏...\n";
+    cout << "Press Enter to start the game...\n";
     cin.get();
 
     Player player;
     vector<Planet> planets;
-    initializePlanets(planets); // 初始化星球数据
+    initializePlanets(planets); // Initialize planet data
 
-    cout << "1. 注册\n2. 登录\n3. 退出\n";
+    cout << "1. Register\n2. Log in\n3. Exit\n";
     string choice;
     getline(cin, choice);
 
     bool isRegister=false;
     if (choice == "1") {
-        registerUser(player); // 用户注册
+        registerUser(player); // User Registration
         if (player.autoLogin) {
-            cout << "注册成功，自动登录！\n";
+            cout << "You have successfully registered, log in automatically...\n";
         } else {
-            cout << "请登录。\n";
+            cout << "Please log in\n";
             if (!login(player)) return 1;
         }
 	isRegister=true;
     } 
     else if (choice == "2") {
-        if (!login(player)) return 1; // 用户登录
+        if (!login(player)) return 1; // user log in
     } else {
         return 0;
     }
     
-    // 判断该玩家有没有完成游戏
+    // check if the player have completed the game
     if (player.isGameComplete) {
         string restartRequest = "You have completed the game.\n"
 	                        "Would you like to restart? (y/n)\n";
@@ -53,61 +53,61 @@ int main() {
 	while (true) {
             string select;
 	    getline(cin,select);
-	    // 询问玩家是否重新游玩
+	    // ask the player if he/she wants to play again
 	    if ((select == "y") || (select == "Y")) {
                 break;
 	    } else if ((select == "n") || (select == "N")) {
 	        cout << "Game exits.\n";
                 return 0;
 	    } else {
-                cout << "无效输入\n";
+                cout << "Invalid input\n";
 		cout << "\n";
 		cout << "Would you like to restart? (y/n)\n";
 	    }
 	}
-	// 如果重来，重新选择难度
+	// If the player choosed play again, reselect the difficulty
 	typeText("You can choose the difficulty again.\n", 50);
 	string difficulty;
 	while (true) {
-            cout << "选择难度 (easy/medium/hard)：";
+            cout << "Choose Difficulty Level (easy/medium/hard)：";
             getline(cin,difficulty);
             if (difficulty != "easy" && difficulty != "medium" && difficulty != "hard") {
-                cout << "无效难度，请重新选择。\n";
+                cout << "This is an invalid difficulty level, please select again\n";
                 continue;
             }
             break;
         }
-	// 如果重来，重新设置玩家初始数据
+	// If restart, reset the player's initial data
 	initializeUser(player, player.username, player.password, difficulty);
 	remove((player.username + "_inventory.txt").c_str());
         loadGame(player);
         isRegister=true;
     }
     
-    //开始游戏
+    //Start the game
     typeText("Game begins!\n",50);
     cout << "\n";
 
-    // 首次游玩，展示背景故事
+    // First play, showing the background story
     if (isRegister) {
-        string backstory = "公元2378年，地球能源枯竭，人类面临灭顶之灾。\n"
-                           "你是一名星际探险者，肩负着寻找四种神秘能源的使命。\n"
-                           "这些能源散落在宇宙的四个星球：Sylvaris、Glaciora、\n"
-                           "Pyroterra 和 Desolara。\n"
-                           "只有集齐所有能源，才能合成无尽能源，拯救地球！\n"
-                           "准备好，你的星际之旅即将开始...\n";
+        string backstory = "In 2378 AD, the earth's energy was exhausted and humanity was facing a catastrophe.\n"
+                           "You are an interstellar explorer on a mission to find four mysterious energy sources.\n"
+                           "These energies are scattered across four planets in the universe：Sylvaris, Glaciora, \n"
+                           "Pyroterra, and Desolara.\n"
+                           "Only by collecting all energy sources can we synthesize endless energy and save the earth!\n"
+                           "Get ready, your interstellar journey is about to begin...\n";
         typeText(backstory, 50);
     }
 
     while (true) {
-        displayMenu(); // 显示主菜单
+        displayMenu(); // Show main menu
         getline(cin, choice);
 
         if (choice == "1") {
-            // 按序解锁星球
-            cout << "可前往的星球：\n";
-            int unlocked = player.energies.size() + 1; // 解锁的星球数
-	    // 展示可选择星球
+            // Unlock planets in order
+            cout << "Planets you can visit:\n";
+            int unlocked = player.energies.size() + 1; // Number of planets unlocked
+	    // Show available planets
             for (int i = 0; i < min(unlocked, (int)planets.size()); i++) {
                 cout << i + 1 << ". " << planets[i].name << endl;
             }
@@ -116,70 +116,70 @@ int main() {
             int idx = stoi(planetChoice) - 1;
             if (idx >= 0 && idx < unlocked && idx < planets.size()) {
                 Planet& currentPlanet = planets[idx];
-                displayPlanetBackground(currentPlanet); // 展示星球背景和效果
+                displayPlanetBackground(currentPlanet); // Show planet background and effects
 
-                // 星球子菜单，停留直到任务完成
+                // Planet submenu, stay until the mission is completed
                 while (true) {
-		    // 判断有没有完成星球任务
+		    // Determine whether the planet mission has been completed
 		    if (checkTasksCompleted(currentPlanet, player)) {
                         currentPlanet.isTaskDone = true;
                         if (find(player.energies.begin(), player.energies.end(), currentPlanet.name) == player.energies.end()) {
                             player.energies.push_back(currentPlanet.name);
-                            cout << "恭喜！获得 " << currentPlanet.name << " 能源！\n";
+                            cout << "Congratulations! You have received " << currentPlanet.name << " sources！\n";
                             if (player.energies.size() < 4) {
-                                cout << "你可以前往下一个星球！\n";
+                                cout << "You can go to the next planet！\n";
                             }
                         }
                     }
-                    cout << "\n星球菜单：\n";
-                    cout << "1. 收集资源\n2. 战斗\n3. 商店\n4. 查看任务\n5. 返回飞船\n";
+                    cout << "\nPlanet Menu：\n";
+                    cout << "1. Collect resources\n2. Combat\n3. Shop\n4. View Tasks\n5. Return to the spacecraft\n";
                     string action;
                     getline(cin, action);
 
                     if (action == "1") {
-                        collectResources(player, currentPlanet); //收集资源
+                        collectResources(player, currentPlanet); //collecting the resources
                     } else if (action == "2") {
-                        combat(player, currentPlanet); //战斗
+                        combat(player, currentPlanet); //combat
                     } else if (action == "3") {
-                        shop(player, currentPlanet); //商店
-                    } else if (action == "4") { //查看任务
+                        shop(player, currentPlanet); //Shop
+                    } else if (action == "4") { //view the tasks
 		        if (currentPlanet.isTaskDone) {
                             cout << "\n";
-                            cout << "本星球任务已完成。\n";
+                            cout << "The mission on this planet has been completed\n";
                         }
                         else {
                             showTasks(currentPlanet, player);
                         }
-                    } else if (action == "5") { //返回
+                    } else if (action == "5") { //return
                         break;
                     } else {
-                        cout << "无效选项，请重新输入。\n";
+                        cout << "It is an invaild selection, place enter again!\n";
                     }
                 }
             } else {
-                cout << "无效星球选择！\n";
+                cout << "Invalid planet selection!\n";
             }
         } else if (choice == "2") {
-            displayRules(); // 显示规则
+            displayRules(); // show the tasks
         } else if (choice == "3") {
-            saveGame(player); // 保存游戏
-            cout << "游戏已保存，即将退出...\n";
+            saveGame(player); // save the data of the game
+            cout << "You have saved your game, exiting...\n";
             break;
         } else {
-            cout << "无效选项，请重新输入。\n";
+            cout << "It is an invaild selection, place enter again!\n";
         }
 
-        // 检查是否集齐所有能源
+        // Check if all energy sources are collected
         if (player.energies.size() == 4) {
 	    player.isGameComplete=true;
 	    saveGame(player);
-            string ending = "恭喜你，星际探险者！\n"
-                            "你成功集齐了四种神秘能源，合成了无尽能源。\n"
-                            "地球的能源危机得以解除，人类文明迎来了新生。\n"
-                            "你的名字将永远铭刻在星际探险史册上！\n"
-                            "感谢你的勇敢与智慧!\n"
+            string ending = "Congratulations, interstellar explorer!\n"
+                            "You have successfully collected four mysterious energies and synthesized endless energy.\n"
+                            "the earth's energy crisis has been resolved and human civilization has been reborn.\n"
+                            "Your name will be forever engraved in the history of interstellar exploration!\n"
+                            "Thank you for your courage and wisdom!\n"
 			    "\n"
-			    "游戏结束！\n";
+			    "Game over!\n";
             typeText(ending, 50);
             break;
         }
