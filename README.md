@@ -14,6 +14,8 @@ In the year 2147, Earth finds itself in the "Great Exhaustion Era." Fossil fuels
 
 Game Rules
 
+Bellow are the main rules of the game. Players must follow them to progress, complete quests, enhance their abilities, and unlock more content.
+
 1. Navigation Rules
 - Initial Access: Players start on the planet Sylvaris and unlock other planets by completing planetary quests.
 - Planet Features: Each planet has unique environments and effects. All quests on a planet must be completed before the player can leave.
@@ -55,5 +57,3 @@ Game Rules
 - Available for Purchase: Tools, Potions.
 - Available for Sale: Resources.
 - Advanced Tools: Unlock advanced tools on specific planets.
-
-These are the main rules of the game. Players must follow these rules to progress, complete quests, enhance their abilities, and unlock more content.
