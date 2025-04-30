@@ -316,41 +316,41 @@ void combat(Player& player, Planet& planet) {
             int damage = desolaraEffect ? player.atk / 2 : player.atk;
             if (criticalHit) {
                 damage *= 1.5;
-                cout << "- 会心一击！你的攻击造成 " << damage << " 点伤害。\n";
+                cout << "- Critical hit! Your attack deals " << damage << " damage.\n";
             } else {
-                cout << "- 你的攻击造成 " << damage << " 点伤害。\n";
+                cout << "- Your attack deals " << damage << " damage.\n";
             }
             monsterHp -= damage;
         } else if (playerAction == 'A' && monsterAction == 'A') {
             int playerDamage = desolaraEffect ? player.atk / 2 : player.atk;
             player.hp -= monsterAtk;
             monsterHp -= playerDamage;
-            cout << "- 双方攻击！你对怪物造成 " << playerDamage << " 点伤害，怪物对你造成 " << monsterAtk << " 点伤害。\n";
+            cout << "- Double attack! You deal " << playerDamage << " damage to the enemy，Enemy deals " << monsterAtk << " damage to you.\n";
         } else if (playerAction == 'A' && monsterAction == 'D') {
             int damage = player.atk / 4;
             player.hp -= damage;
-            cout << "- 怪物防御反弹，你受到 " << damage << " 点伤害。\n";
+            cout << "- Enemy's defense reflects the attack. You take " << damage << " damage.\n";
         } else if (playerAction == 'H' && monsterAction == 'D') {
             int heal = player.max_hp / 10;
             player.hp = min(player.max_hp, player.hp + heal);
-            cout << "- 治疗成功，恢复 " << heal << " 点生命值。\n";
+            cout << "- Healed successfully. Restored " << heal << " HP。\n";
         } else if (playerAction == 'H' && monsterAction == 'A') {
             player.hp -= monsterAtk;
-            cout << "- 怪物攻击，你受到 " << monsterAtk << " 点伤害。\n";
+            cout << "- Enemy attacks. You take " << monsterAtk << " damage.\n";
         } else if (playerAction == 'D' && monsterAction == 'A') {
             int damage = perfectBlock ? player.atk / 2 : player.atk / 4;
             monsterHp -= damage;
             if (perfectBlock) {
-                cout << "- 完美格挡！怪物被反弹，受到 " << damage << " 点伤害。\n";
+                cout << "- Perfect Parry! Enemy is countered, taking " << damage << " damage.\n";
             } else {
-                cout << "- 怪物被反弹，受到 " << damage << " 点伤害。\n";
+                cout << "- Enemy is reflected, taking " << damage << " damage.\n";
             }
         } else if (playerAction == 'D' && monsterAction == 'H') {
             int heal = maxMonsterHp / 10;
             monsterHp = min(maxMonsterHp, monsterHp + heal);
-            cout << "- 怪物治疗，恢复 " << heal << " 点生命值。\n";
+            cout << "- Enemy heals, restoring " << heal << " HP.\n";
         } else {
-            cout << "- 双方行动无效。\n";
+            cout << "- Both actions fail.\n";
         }
 
         // Check player's HP.
