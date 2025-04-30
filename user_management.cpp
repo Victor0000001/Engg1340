@@ -44,21 +44,21 @@ void initializeUser(Player& player, string username, string password, string dif
 void registerUser(Player& player) {
     string username, password, difficulty;
     while (true) {
-        cout << "输入用户名：";
+        cout << "Please enter a username：";
         getline(cin,username);
         if (usernameExists(username)) {
-            cout << "用户名已存在，请选择其他用户名。\n";
+            cout << "Username already exists, please select another username.\n";
             continue;
         }
 	break;
     }
-    cout << "输入密码：";
+    cout << "Please enter a password：";
     getline(cin,password);
     while (true) {
-        cout << "选择难度 (easy/medium/hard)：";
+        cout << "Please select difficulty (easy/medium/hard)：";
         getline(cin,difficulty);
         if (difficulty != "easy" && difficulty != "medium" && difficulty != "hard") {
-            cout << "无效难度，请重新选择。\n";
+            cout << "Invalid difficulty, please select again.\n";
             continue;
         }
         break;
@@ -67,7 +67,7 @@ void registerUser(Player& player) {
     
     ofstream file("users.txt", ios::app);
     if (!file) {
-        cerr << "无法打开文件。\n"; // Error message if file can't be opened
+        cerr << "Cannot open the file.\n"; // Error message if file can't be opened
         exit(1); // Exit with an error code
     }
     file << username << " " << password << " " << username << " " << difficulty << " 10 100 100 0 1000 1 false\n"; //autoLogin=1
@@ -77,9 +77,9 @@ void registerUser(Player& player) {
 // 用户登录
 bool login(Player& player) {
     string username, password;
-    cout << "输入用户名：";
+    cout << "Please enter a username：";
     getline(cin, username);
-    cout << "输入密码：";
+    cout << "Please enter a password：";
     getline(cin, password);
 
     ifstream file("users.txt");
@@ -108,7 +108,7 @@ bool login(Player& player) {
         }
     }
     file.close();
-    cout << "用户名或密码错误。\n";
+    cout << "The username or password is wrong.\n";
     return false;
 }
 
