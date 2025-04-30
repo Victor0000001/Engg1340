@@ -14,7 +14,7 @@ void typeText(const string& text, int msPerChar) {
     }
 }
 
-// 主菜单
+// Main Menu
 void displayMenu() {
     cout << "\n主菜单：\n";
     cout << "1. 出发\n2. 规则\n3. 保存并退出\n";
