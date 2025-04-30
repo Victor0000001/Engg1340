@@ -274,7 +274,7 @@ void combat(Player& player, Planet& planet) {
             cout << "- The Enemy chooses：";
             switch (monsterAction) {
                 case 'A': cout << "ATTACK（A）"; player.hp -= monsterAtk; cout << ", you take " << monsterAtk << " damage.\n"; break;
-                case 'H': cout << "HEAL（H）"; monsterHp = min(maxMonsterHp, monsterHp + maxMonsterHp / 10); cout << ", Enemy recovery " << maxMonsterHp / 10 << " 点生命值。\n"; break;
+                case 'H': cout << "HEAL（H）"; monsterHp = min(maxMonsterHp, monsterHp + maxMonsterHp / 10); cout << ", Enemy recovery " << maxMonsterHp / 10 << " HP.\n"; break;
                 case 'D': cout << "DEFEND（D）, no effect.\n"; break;
             }
             continue;
