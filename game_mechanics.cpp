@@ -407,7 +407,7 @@ void initializePlanets(vector<Planet>& planets) {
                     {"Starfruit", "Ironwood", "Crystal Ore", "Moonfish"},
                     "Forest Guardian's Badge",
                     {{"Ironwood", 2}, {"Crystal Ore", 1}, {"Forest Guardian's Badge", 1}},
-                    "You land on Sylvaris, a lush forest planet, where the air is filled with the scent of flowers.\n"
+                    "Sylvaris, a lush forest planet, where the air is filled with the scent of flowers.\n"
                     "Towering trees block out the sun, and streams shimmer with schools of fish glowing strangely. \n",
                     "No special effects.",
 		    false
@@ -417,7 +417,7 @@ void initializePlanets(vector<Planet>& planets) {
                     {"Chillberry", "Frostwood", "Glacial Crystal", "Icefin Trout"},
                     "Ice Prison Warrior's Amulet",
                     {{"Frostwood", 1}, {"Glacial Crystal", 2}, {"Ice Prison Warrior's Amulet", 1}},
-                    "Glaciora，A frozen tundra, with piercing cold winds. \n"
+                    "Glaciora，a frozen tundra, with piercing cold winds. \n"
                     "Precious minerals lie hidden beneath the ice, and rare fish swim in the lakes.\n",
                     "In combats, without armor equipped, there's a 50% chance of being frozen, skipping your turn.",
 		    false
@@ -427,7 +427,7 @@ void initializePlanets(vector<Planet>& planets) {
                     {"Cinderbloom", "Emberwood", "Magma Ore", "Firefin"},
                     "Alchemist's Mark",
                     {{"Emberwood", 1}, {"Magma Ore", 3}, {"Alchemist's Mark", 1}},
-                    "Pyroterra，A scorching volcanic planet, with cracks in the ground spewing flames.\n"
+                    "Pyroterra，a scorching volcanic planet, with cracks in the ground spewing flames.\n"
                     "The lava rivers hold precious ores, and the blazing lakes are home to unique fish species.\n",
                     "In combats, without armor equipped, lose 5 health points per turn.",
 		    false
@@ -437,7 +437,7 @@ void initializePlanets(vector<Planet>& planets) {
                     {"Wildland Herbs", "Desogrove", "Arid Crystal", "Voidfish"},
                     "Ruins Warrior's Relic",
                     {{"Desogrove", 2}, {"Arid Crystal", 3}, {"Ruins Warrior's Relic", 1}},
-                    "Desolara，A desolate desert planet, with sandstorms sweeping across the land.\n"
+                    "Desolara，a desolate desert planet, with sandstorms sweeping across the land.\n"
                     "In the abandoned ruins, ancient treasures lie hidden, and rare plants grow tenaciously.\n",
                     "In combats, if not equipped with armor, lose 5 health points and reduce attack power by 20% each turn.",
 		    false
