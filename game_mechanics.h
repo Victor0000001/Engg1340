@@ -6,28 +6,28 @@
 #include "user_management.h"
 using namespace std;
 
-// 星球结构体
+// Planet structure
 struct Planet {
-    string name; // 星球名称
-    vector<string> resources; // 可采集资源
-    string combat_item; // 战斗掉落物
-    vector<pair<string, int>> tasks; // 任务列表（物品，数量）
-    string background; // 星球背景
-    string effect; // 星球效果
+    string name; // Planet name
+    vector<string> resources; // Resources that can be collected
+    string combat_item; // Combat items
+    vector<pair<string, int>> tasks; // Task list (item, quantity)
+    string background; // Background of the Planet
+    string effect; // The effect of the Planet
     bool isTaskDone;
 };
 
-// 函数声明
-void collectResources(Player& player, Planet& planet);//收集
-void combat(Player& player, Planet& planet);//战斗
-void showTasks(const Planet& planet, Player& player);//展示任务
-bool checkTasksCompleted(const Planet& planet, const Player& player);//判断任务是否完成
-void initializePlanets(vector<Planet>& planets);//初始化星球数据
-void shop(Player& player, const Planet& planet);//商店
-void displayMenu();//展示菜单
-void displayCombatRules();//展示战斗规则
-void displayRules();//展示所有规则
-void displayPlanetBackground(const Planet& planet);//展示星球背景
-void typeText(const string& text, int msPerChar);//打字效果
+// Function declaration
+void collectResources(Player& player, Planet& planet);//collect resources
+void combat(Player& player, Planet& planet);//combat
+void showTasks(const Planet& planet, Player& player);//show the task
+bool checkTasksCompleted(const Planet& planet, const Player& player);//check if the task is completed
+void initializePlanets(vector<Planet>& planets);//Initialize planet data
+void shop(Player& player, const Planet& planet);//shop
+void displayMenu();//Show the menu
+void displayCombatRules();//Show the combat rules
+void displayRules();//Show all rules
+void displayPlanetBackground(const Planet& planet);//Show background of the Planet
+void typeText(const string& text, int msPerChar);//Typing effect
 
 #endif
