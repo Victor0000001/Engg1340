@@ -357,7 +357,7 @@ void combat(Player& player, Planet& planet) {
         if (player.hp <= 0) {
             cout << "Your HP have dropped to 0, you are defeated!\n";
             player.hp = player.max_hp;
-            player.atk = originalAtk; // Inicialize ATK
+            player.atk = originalAtk; // Initialize ATK
             return;
         }
     }
