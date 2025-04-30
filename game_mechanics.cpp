@@ -31,65 +31,68 @@ void displayCombatRules() {
     cout << "\n============================ Battle Rules ================================\n";
     cout << "You engage in turn-based combat with monsters, choosing the following actions each time：\n";
     cout << "1. ATTACT（A）：\n";
-    cout << "   - Monster Selects Heal (H): Deals full damage (equal to your Attack Power).\n";
-    cout << "   - 怪物选择攻击（A）：双方造成一半伤害。\n";
-    cout << "   - 怪物选择防御（D）：怪物反弹，你受到 1/4 攻击力伤害。\n";
-    cout << "   - 10% 概率触发会心一击，伤害增加50%。\n";
+    cout << "   - Enemy Chooses Heal (H): Deals full damage (equal to your Attack Power).\n";
+    cout << "   - Enemy Chooses Attack (A): Both deal 50% damage\n";
+    cout << "   - Enemy Chooses Defend (D): Enemy parries - You take 25% ATK damage\n";
+    cout << "   - 10% Critical Chance: +50% DMG\n";
     cout << "2. DEFEND（D）：\n";
-    cout << "   - 怪物选择攻击（A）：怪物被反弹，受到 1/4 你的攻击力伤害。\n";
-    cout << "   - 怪物选择治疗（H）：怪物恢复 10% 生命值。\n";
-    cout << "   - 10% 概率触发完美格挡，反弹伤害翻倍。\n";
-    cout << "3. HEAL（H）：恢复10%最大生命值。\n";
-    cout << "   - 怪物选择防御（D）：治疗生效。\n";
-    cout << "   - 怪物选择攻击（A）：你受到全额怪物伤害。\n";
-    cout << "4. POTION（P）：恢复50%最大生命值，需消耗背包中的 Healing Potion。\n";
-    cout << "5. ATTACK POTION（X）：提升50%攻击力，持续整场战斗，需消耗 Attack Potion。\n";
+    cout << "   - Enemy Chooses Attack (A):Rebound! Enemy takes 25% of your ATK as damage.\n";
+    cout << "   - Enemy Chooses Heal (H):Restores 10% HP\n";
+    cout << "   - 10% Perfect Block Chance: 2x damage rebound。\n";
+    cout << "3. HEAL（H）：Restores 10% of max HP.\n";
+    cout << "   - Enemy Chooses Defend (D):Healing effect triggered.\n";
+    cout << "   - Enemy Chooses Attack (A)：You take full damage from the Enemy.\n";
+    cout << "4. POTION（P）：Restores 50% of max HP (consumes 1 Healing Potion from inventory).\n";
+    cout << "5. ATTACK POTION（X）：Increases ATK by 50% for the entire battle (consumes 1 Attack Potion).\n";
     cout << "\n";
-    cout << "怪物随机选择A、D、H三种行动。";
+    cout << "Enemy randomly selects between [A]ttack, [D]efend, or [H]eal actions.";
     cout << "\n";
-    cout << "胜利条件：怪物生命值降至0，获得掉落物。\n";
-    cout << "失败条件：你的生命值降至0，恢复满血，战斗结束。\n";
+    cout << "Victory Condition: Reduce enemy HP to 0 and claim dropped items.\n";
+    cout << "Defeat Condition: Your HP reaches 0 - Full health restored, battle ends.\n";
     cout << "========================================================================\n\n";
 }
 
-// 规则
+// Rules
 void displayRules() {
-    cout << "\n============================ 游戏规则 ================================\n";
+    cout << "\n============================ Game Rules ================================\n";
     cout << "\n";
-    cout << "1. 航行规则：\n";
-    cout << "   - 初始只能前往 Sylvaris，完成星球任务后解锁下一个星球。\n";
-    cout << "   - 每个星球有独特背景和效果，需完成所有任务才能离开。\n";
+    cout << "1. Navigation Rules: \n";
+    cout << "   - Initial access is limited to Sylvaris; subsequent planets unlock after completing planetary quests.\n";
+    cout << "   - Each planet features unique environments and effects. All quests must be completed before departure.\n";
     cout << "\n";
-    cout << "2. 收集规则：\n";
-    cout << "   - 分为采集、伐木、挖矿、钓鱼四种方式。\n";
-    cout << "   - 每次收集有概率失败（根据难度：easy 5%, medium 10%, hard 20%）。\n";
-    cout << "   - 10% 概率触发幸运事件，资源翻倍。\n";
-    cout << "   - 收集需等待 2-3 秒，显示过场动画。\n";
+    cout << "2. Collection Rules: \n";
+    cout << "   - Collection Methods: Gathering | Logging | Mining | Fishing.\n";
+    cout << "   - Collection Failure Chance (Per Attempt): \n";
+    cout << "   * Easy Mode: 5% failure rate\n";
+    cout << "   * Medium Mode: 10% failure rate\n";
+    cout << "   * Hard Mode: 20% failure rate\n";\n";
+    cout << "   - 10% chance: Lucky event (resources doubled).\n";
+    cout << "   - Collection requires 2-3s wait.\n";
     cout << "\n";
-    cout << "3. 战斗规则：\n";
+    cout << "3. Battle Rules: \n";
     displayCombatRules();
     cout << "\n";
-    cout << "4. 任务规则：\n";
-    cout << "   - 每个星球有若干任务，需收集指定数量的物品。\n";
-    cout << "   - 完成所有任务后获得星球能源。\n";
+    cout << "4. Mission Rules：\n";
+    cout << "   - Each planet has multiple quests requiring collection of specific items.\n";
+    cout << "   - Complete all quests to obtain Planet Energy.\n";
     cout << "\n";
-    cout << "5. 商店规则：\n";
-    cout << "   - 可购买工具、药水或出售资源。\n";
-    cout << "   - 高级工具在特定星球解锁。\n";
+    cout << "5. Shop Rules:：\n";
+    cout << "   - Available: Tools, Potions | Sell: Resources.\n";
+    cout << "   - Advanced tools unlock on specific planets.\n";
     cout << "\n";
     cout << "========================================================================\n\n";
 }
 
-// 收集资源
+// Collect Resources
 void collectResources(Player& player, Planet& planet) {
     string action;
-    cout << "选择收集方式：\n1. 采集\n2. 伐木\n3. 挖矿\n4. 钓鱼\n";
+    cout << "Collection Method: \n1. Gathering\n2. Logging\n3. Mining\n4. Fishing\n";
     getline(cin, action);
 
     string resource;
     string animation;
 
-    //特定物品收集判断（不同星球特定物品需要特定工具才可采集）
+    //Special Item Collection Check (Requires specific tools to gather planet-specific items)
     bool isAction2=false,isAction3=false,isAction4=false;
     if (planet.name=="Sylvaris") {
         if ((find(player.inventory.begin(),player.inventory.end(),"Axe")!=player.inventory.end()) || (find(player.inventory.begin(),player.inventory.end(),"Heat-resistant Axe")!=player.inventory.end())) {
@@ -136,33 +139,33 @@ void collectResources(Player& player, Planet& planet) {
         }
     }
 
-    //收集方式选择
-    if (action == "1") { //采集
+    //Collection Method Selection
+    if (action == "1") { //Gathering
         resource = planet.resources[0];
-        animation = "正在摘取 " + resource + "...\n";
+        animation = "Harvesting " + resource + "...\n";
     } else if (action == "2") {
-    	if (!isAction2) { //砍伐
-            cout << "你没有可用于砍伐的工具！\n";
+    	if (!isAction2) { //Logging
+            cout << "You lack the proper tool for chopping! \n";
 	    return;
 	}
         resource = planet.resources[1];
-        animation = "正在砍伐 " + resource + "...\n";
-    } else if (action == "3") { //挖掘
+        animation = "Chopping " + resource + "...\n";
+    } else if (action == "3") { //Mining
         if (!isAction3) {
-            cout << "你没有可用于挖掘的工具！\n";
+            cout << "You have no tool for digging!\n";
             return;
         }
         resource = planet.resources[2];
-        animation = "正在挖掘 " + resource + "...\n";
-    } else if (action == "4") { //钓鱼
+        animation = "Digging " + resource + "...\n";
+    } else if (action == "4") { //Fishing
         if (!isAction4) {
-            cout << "你没有可用于钓鱼的工具！\n";
+            cout << "You have no tool for fishing!\n";
             return;
         }
         resource = planet.resources[3];
-        animation = "正在钓取 " + resource + "...\n";
+        animation = "Fishing " + resource + "...\n";
     } else {
-        cout << "无效选择！\n";
+        cout << "Invalid Choice\n";
         return;
     }
 
