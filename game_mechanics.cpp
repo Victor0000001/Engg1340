@@ -26,9 +26,9 @@ void displayPlanetBackground(const Planet& planet) {
     cout << "Planet Effects：" << planet.effect << "\n";
 }
 
-// Battle Rules
+// Combat Rules
 void displayCombatRules() {
-    cout << "\n============================ Battle Rules ================================\n";
+    cout << "\n============================ Combat Rules ================================\n";
     cout << "You engage in turn-based combat with monsters, choosing the following actions each time：\n";
     cout << "1. ATTACT（A）：\n";
     cout << "   - Enemy Chooses Heal (H): Deals full damage (equal to your Attack Power).\n";
@@ -42,7 +42,7 @@ void displayCombatRules() {
     cout << "3. HEAL（H）：Restores 10% of max HP.\n";
     cout << "   - Enemy Chooses Defend (D):Healing effect triggered.\n";
     cout << "   - Enemy Chooses Attack (A)：You take full damage from the Enemy.\n";
-    cout << "4. POTION（P）：Restores 50% of max HP (consumes 1 Healing Potion from inventory).\n";
+    cout << "4. HEALING POTION（P）：Restores 50% of max HP (consumes 1 Healing Potion from inventory).\n";
     cout << "5. ATTACK POTION（X）：Increases ATK by 50% for the entire battle (consumes 1 Attack Potion).\n";
     cout << "\n";
     cout << "Enemy randomly selects between [A]ttack, [D]efend, or [H]eal actions.";
@@ -69,7 +69,7 @@ void displayRules() {
     cout << "   - 10% chance: Lucky event (resources doubled).\n";
     cout << "   - Collection requires 2-3s wait.\n";
     cout << "\n";
-    cout << "3. Battle Rules: \n";
+    cout << "3. Combat Rules: \n";
     displayCombatRules();
     cout << "\n";
     cout << "4. Mission Rules：\n";
@@ -170,9 +170,9 @@ void collectResources(Player& player, Planet& planet) {
     }
 
     typeText(animation, 50);
-    this_thread::sleep_for(chrono::seconds(2 + rand() % 2)); // 2-3秒延迟
+    this_thread::sleep_for(chrono::seconds(2 + rand() % 2)); // 2-3 second delay
     
-    // 收集成功率
+    // Collection Success Rate
     int successRate = (player.difficulty == "easy") ? 95 : (player.difficulty == "medium") ? 90 : 80;
     bool luckyEvent = (rand() % 100) < 10;
 
@@ -181,29 +181,29 @@ void collectResources(Player& player, Planet& planet) {
         for (int i = 0; i < amount; i++) {
             if (player.inventory.size() < player.storage) {
                 player.inventory.push_back(resource);
-                cout << "成功收集到：" << resource << endl;
+                cout << "Successfully Collected:" << resource << endl;
             }
         }
-	// 幸运事件是否出发
+	// Whether the lucky event is triggered
         if (luckyEvent) {
-            cout << "幸运女神的眷顾！资源翻倍！\n";
+            cout << "Blessing of the Goddess of Fortune! Resources doubled!\n";
         }
     } else {
-        cout << "收集失败！\n";
+        cout << "Collection failed!\n";
     }
 }
 
-// 战斗系统
+// Combat System
 void combat(Player& player, Planet& planet) {
-    // 选择是否展示规则
-    cout << "是否查看战斗规则？(y/n)：";
+    // Choose whether to display rules
+    cout << "View combat rules?(y/n)：";
     string viewRules;
     getline(cin, viewRules);
     if (viewRules == "y" || viewRules == "Y") {
         displayCombatRules();
     }
 
-    //怪物属性随游戏进行程度增强
+    //Enemy attributes scale with game progress.
     int monsterDifficulty=1;
     if (planet.name=="Glaciora")
         monsterDifficulty=1.2;
@@ -212,7 +212,7 @@ void combat(Player& player, Planet& planet) {
     if (planet.name=="Desolara")
         monsterDifficulty=1.5;
 
-    //初始化怪物数值
+    //Initialize enemy stats
     int monsterAtk = (player.difficulty == "easy") ? 8 :
                      (player.difficulty == "medium") ? 10 : 12;
     monsterAtk *= monsterDifficulty;
@@ -224,91 +224,91 @@ void combat(Player& player, Planet& planet) {
     bool usedAttackPotion = false;
     int originalAtk = player.atk;
     
-    //战斗
+    //Combat
     while (player.hp > 0 && monsterHp > 0) {
-        cout << "当前状态：玩家 HP: " << player.hp << ", 怪物 HP: " << monsterHp << endl;
-        cout << "选择行动 (A: 攻击, H: 治疗, D: 防御, P: 药水, X: 攻击药水): ";
+        cout << "Current Status: Player HP: " << player.hp << ", Enemy HP: " << monsterHp << endl;
+        cout << "Choose action (A: Attack, H: Heal, D: Defend, P: Potion, X: Attack Potion): ";
         string action;
         getline(cin, action);
 
-        // 战斗效果
+        // Combat Effect
         bool frozen = ((planet.name == "Glaciora") && (rand() % 100 < 50) && (find(player.inventory.begin(),player.inventory.end(),"Cold-resistant Suit")==player.inventory.end()));
 	bool furnaceEffect = ((planet.name == "Pyroterra") && (find(player.inventory.begin(),player.inventory.end(),"Heat-resistant Suit")==player.inventory.end()));
 	bool desolaraEffect = ((planet.name == "Desolara") && (find(player.inventory.begin(),player.inventory.end(),"Radiation-resistant Suit")==player.inventory.end()));
 	
-        // 恢复药水
+        // Healing Potion
         if (action == "P") {
             auto it = find(player.inventory.begin(), player.inventory.end(), "Healing Potion");
             if (it != player.inventory.end()) {
                 player.hp = min(player.max_hp, player.hp + player.max_hp / 2);
                 player.inventory.erase(it);
-                cout << "战斗流程：你使用了药水（P），恢复 50% 最大生命值（+" << player.max_hp / 2 << " HP）。\n";
+                cout << "Combat Flow: You used a Healing Potion (P), restoring 50% of max HP（+" << player.max_hp / 2 << " HP）。\n";
                 continue;
             } else {
-                cout << "背包中没有 Healing Potion！\n";
+                cout << "No Healing Potion in inventory!\n";
                 continue;
             }
         }
 
-        // 攻击药水
+        // Attack Potion
         if (action == "X" && !usedAttackPotion) {
             auto it = find(player.inventory.begin(), player.inventory.end(), "Attack Potion");
             if (it != player.inventory.end()) {
                 player.atk *= 1.5;
                 usedAttackPotion = true;
                 player.inventory.erase(it);
-                cout << "战斗流程：你使用了攻击药水（X），攻击力提升 50%！\n";
+                cout << "Attack Flow: You used a Power Potion (X), increasing ATK by 50%!\n";
                 continue;
             } else {
-                cout << "背包中没有 Attack Potion！\n";
+                cout << "No Attack Potion in inventory！\n";
                 continue;
             }
         }
 
-        // 怪物行动
+        // Enemy Action
         char monsterAction = "AHD"[rand() % 3];
 
-        // 检查效果
-        if (frozen) { //冰冻
-            cout << "冰冻效果触发！本回合你无法行动。\n";
-            cout << "- 怪物选择了：";
+        // Check Effects
+        if (frozen) { //Frozen
+            cout << "Freeze effect triggered! You cannot act this turn.\n";
+            cout << "- The Enemy chooses：";
             switch (monsterAction) {
-                case 'A': cout << "攻击（A）"; player.hp -= monsterAtk; cout << ", 你受到 " << monsterAtk << " 点伤害。\n"; break;
-                case 'H': cout << "治疗（H）"; monsterHp = min(maxMonsterHp, monsterHp + maxMonsterHp / 10); cout << ", 怪物恢复 " << maxMonsterHp / 10 << " 点生命值。\n"; break;
-                case 'D': cout << "防御（D）, 无效果。\n"; break;
+                case 'A': cout << "ATTACK（A）"; player.hp -= monsterAtk; cout << ", you take " << monsterAtk << " damage.\n"; break;
+                case 'H': cout << "HEAL（H）"; monsterHp = min(maxMonsterHp, monsterHp + maxMonsterHp / 10); cout << ", Enemy recovery " << maxMonsterHp / 10 << " 点生命值。\n"; break;
+                case 'D': cout << "DEFEND（D）, no effect.\n"; break;
             }
             continue;
         }
-        if (furnaceEffect) { //灼烧
+        if (furnaceEffect) { //Burns
             player.hp -= 5;
-            cout << "灼烧效果!每回合减少 5 点生命值。\n";
+            cout << "Burning effect! Loses 5 HP each turn.\n";
         }
-        if (desolaraEffect) { //辐射
+        if (desolaraEffect) { //Radiation
             player.hp -= 5;
 	    player.atk = 9;
-            cout << "辐射效果！每回合减少 5 点生命值，并减少10%攻击力。\n";
+            cout << "Radiation effect! Loses 5 HP and reduces ATK by 10% each turn.\n";
         }
 
-        // 输出玩家和怪物行动
-        cout << "战斗流程：\n";
-        cout << "- 你选择了：";
+        // Output player and monster actions
+        cout << "Combat Flow：\n";
+        cout << "- You have chosen：";
         char playerAction = action.empty() ? 'A' : toupper(action[0]);
         switch (playerAction) {
-            case 'A': cout << "攻击（A）"; break;
-            case 'H': cout << "治疗（H）"; break;
-            case 'D': cout << "防御（D）"; break;
-            default: cout << "无效行动（按攻击处理）"; playerAction = 'A'; break;
+            case 'A': cout << "ATTACK（A）"; break;
+            case 'H': cout << "HEAL（H）"; break;
+            case 'D': cout << "DEFEND（D）"; break;
+            default: cout << "INVALID ACTION (treated as an attack)."; playerAction = 'A'; break;
         }
         cout << "\n";
-        cout << "- 怪物选择了：";
+        cout << "- Your Enemy have chosen ：";
         switch (monsterAction) {
-            case 'A': cout << "攻击（A）"; break;
-            case 'H': cout << "治疗（H）"; break;
-            case 'D': cout << "防御（D）"; break;
+            case 'A': cout << "ATTACK（A）"; break;
+            case 'H': cout << "HEAL（H）"; break;
+            case 'D': cout << "DEFEND（D）"; break;
         }
         cout << "\n";
 
-        // 战斗结果
+        // Combat results
         bool criticalHit = (playerAction == 'A' && rand() % 100 < 10);
         bool perfectBlock = (playerAction == 'D' && monsterAction == 'A' && rand() % 100 < 10);
 
@@ -353,33 +353,33 @@ void combat(Player& player, Planet& planet) {
             cout << "- 双方行动无效。\n";
         }
 
-        // 检查玩家生命值
+        // Check player's HP.
         if (player.hp <= 0) {
-            cout << "你的生命值降至 0，你被击败了！\n";
+            cout << "Your HP have dropped to 0, you are defeated!\n";
             player.hp = player.max_hp;
-            player.atk = originalAtk; // 重置攻击力
+            player.atk = originalAtk; // Inicialize ATK
             return;
         }
     }
     
-    //检查怪物生命值是否降至0以下
+    //Check if enemy's HK is below 0.
     if (monsterHp <= 0) {
-        cout << "怪物生命值降至 0，你胜利了！\n";
-        cout << "获得掉落物：" << planet.combat_item << endl;
+        cout << "Enemy's HP has dropped to 0, you win!\n";
+        cout << "Acquired drop: " << planet.combat_item << endl;
         player.inventory.push_back(planet.combat_item);
     }
-    player.atk = originalAtk; // 重置攻击力
+    player.atk = originalAtk; // Reset ATK.
 }
 
-// 显示任务进度
+// Display mission progress.
 void showTasks(const Planet& planet, Player& player) {
-    // 该星球任务已完成
+    // Missions on this planet have been completed.
     if (planet.isTaskDone) {
         cout << "The task of this planet is done!\n";
         return;
     }
-    //该星球任务未完成
-    cout << "\n" << planet.name << "的任务：\n";
+    //Missions on this planet are not yet complete.
+    cout << "\n" << "Missions in" << planet.name << "：\n";
     for (const auto& task : planet.tasks) {
         int count = count_if(player.inventory.begin(), player.inventory.end(),
                              [&](const string& item) { return item == task.first; });
@@ -387,7 +387,7 @@ void showTasks(const Planet& planet, Player& player) {
     }
 }
 
-// 检查任务是否全部完成
+// Check if all missions are complete.
 bool checkTasksCompleted(const Planet& planet, const Player& player) {
     for (const auto& task : planet.tasks) {
         int count = count_if(player.inventory.begin(), player.inventory.end(),
@@ -399,7 +399,7 @@ bool checkTasksCompleted(const Planet& planet, const Player& player) {
     return true;
 }
 
-// 初始化星球数据
+// Initialize planet data.
 void initializePlanets(vector<Planet>& planets) {
     planets = {
             {
@@ -407,9 +407,9 @@ void initializePlanets(vector<Planet>& planets) {
                     {"Starfruit", "Ironwood", "Crystal Ore", "Moonfish"},
                     "Forest Guardian's Badge",
                     {{"Ironwood", 2}, {"Crystal Ore", 1}, {"Forest Guardian's Badge", 1}},
-                    "你降落在 Sylvaris，一片郁郁葱葱的森林星球，空气中弥漫着花香。\n"
-                    "参天大树遮天蔽日，溪流中闪烁着奇异光芒的鱼群。\n",
-                    "无特殊效果",
+                    "You land on Sylvaris, a lush forest planet, where the air is filled with the scent of flowers.\n"
+                    "Towering trees block out the sun, and streams shimmer with schools of fish glowing strangely. \n",
+                    "No special effects.",
 		    false
             },
             {
@@ -417,9 +417,9 @@ void initializePlanets(vector<Planet>& planets) {
                     {"Chillberry", "Frostwood", "Glacial Crystal", "Icefin Trout"},
                     "Ice Prison Warrior's Amulet",
                     {{"Frostwood", 1}, {"Glacial Crystal", 2}, {"Ice Prison Warrior's Amulet", 1}},
-                    "Glaciora，一座冰封的荒原，寒风刺骨。\n"
-                    "冰面下隐藏着珍贵的矿物，湖泊中游动着稀有鱼类。\n",
-                    "战斗中，若没有装备防具，50% 概率触发冰冻，跳过你的行动",
+                    "Glaciora，A frozen tundra, with piercing cold winds. \n"
+                    "Precious minerals lie hidden beneath the ice, and rare fish swim in the lakes.\n",
+                    "In combats, without armor equipped, there's a 50% chance of being frozen, skipping your turn.",
 		    false
             },
             {
@@ -427,9 +427,9 @@ void initializePlanets(vector<Planet>& planets) {
                     {"Cinderbloom", "Emberwood", "Magma Ore", "Firefin"},
                     "Alchemist's Mark",
                     {{"Emberwood", 1}, {"Magma Ore", 3}, {"Alchemist's Mark", 1}},
-                    "Pyroterra，一颗炽热的熔岩星球，地面裂缝喷出火焰。\n"
-                    "岩浆河流中蕴藏着珍贵的矿石，炽热的湖泊中有独特的鱼类。\n",
-                    "战斗中，若没有装备防具，每回合减少 5 点生命值",
+                    "Pyroterra，A scorching volcanic planet, with cracks in the ground spewing flames.\n"
+                    "The lava rivers hold precious ores, and the blazing lakes are home to unique fish species.\n",
+                    "In combats, without armor equipped, lose 5 health points per turn.",
 		    false
             },
             {
@@ -437,9 +437,9 @@ void initializePlanets(vector<Planet>& planets) {
                     {"Wildland Herbs", "Desogrove", "Arid Crystal", "Voidfish"},
                     "Ruins Warrior's Relic",
                     {{"Desogrove", 2}, {"Arid Crystal", 3}, {"Ruins Warrior's Relic", 1}},
-                    "Desolara，一片荒凉的沙漠星球，沙尘暴席卷大地。\n"
-                    "废弃的遗迹中隐藏着古老的宝物，稀有的植物顽强生长。\n",
-                    "战斗中，若没有装备防具，每回合减少 5 点生命值，并且攻击力减少20%",
+                    "Desolara，A desolate desert planet, with sandstorms sweeping across the land.\n"
+                    "In the abandoned ruins, ancient treasures lie hidden, and rare plants grow tenaciously.\n",
+                    "In combats, if not equipped with armor, lose 5 health points and reduce attack power by 20% each turn.",
 		    false
             }
     };
