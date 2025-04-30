@@ -3,16 +3,16 @@
 #include "game_mechanics.h"
 using namespace std;
 
-// 商店系统
+// shopping system
 void shop(Player& player, const Planet& planet) {
-    cout << "欢迎来到 " << planet.name << " 的商店！当前货币：" << player.currency << endl;
-    cout << "1. 购买\n2. 出售\n3. 退出\n";
+    cout << "Welcome to " << planet.name << "’s shop. Your have ：" << player.currency << " uni-coin now. "<< endl;
+    cout << "1. Purchase\n2. Sell\n3. Exit\n";
     string choice;
     getline(cin, choice);
 
-    //购买商品
+    //buy products
     if (choice == "1") {
-        cout << "商品列表：\n";
+        cout << "Goods list：\n";
         vector<pair<string, int>> items = {
                 {"Pickaxe", 50},
                 {"Fishing Rod", 50},
@@ -21,7 +21,7 @@ void shop(Player& player, const Planet& planet) {
                 {"Attack Potion", 30}
         };
 
-        // 按星球解锁高级工具
+        // Unlock advanced tools by planet
         if (planet.name == "Glaciora" || planet.name == "Pyroterra" || planet.name == "Desolara") {
             items.push_back({"Cold-resistant Pickaxe", 100});
             items.push_back({"Ice Fishing Rod", 100});
@@ -37,13 +37,13 @@ void shop(Player& player, const Planet& planet) {
             items.push_back({"Radiation-resistant Suit", 150});
         }
         
-	//展示商品价格
+	//show the price of the products
         for (int i = 0; i < items.size(); i++) {
-            cout << i + 1 << ". " << items[i].first << " (" << items[i].second << " 货币)\n";
+            cout << i + 1 << ". " << items[i].first << " (" << items[i].second << " uni-coin)\n";
         }
 	cout << items.size()+1 << ". Exit shop\n";
         
-	//购买商品
+	//buy products
         string itemChoice;
         getline(cin, itemChoice);
         int idx = stoi(itemChoice) - 1;
@@ -56,20 +56,20 @@ void shop(Player& player, const Planet& planet) {
             if (player.currency >= items[idx].second) {
                 player.currency -= items[idx].second;
                 player.inventory.push_back(items[idx].first);
-                cout << "购买成功：" << items[idx].first << endl;
+                cout << "Purchase successful：" << items[idx].first << endl;
             } else {
-                cout << "货币不足！\n";
+                cout << "Your money is not enough！\n";
             }
             if (!choiceCorrect) {
-                cout << "无效选择！\n";
+                cout << "Invalid selection！\n";
             }
         }
     }
 
-    //出售
+    //selling the products
     else if (choice == "2") {
         if (player.inventory.empty()) {
-            cout << "背包中没有可出售的物品！\n";
+            cout << "There are nothing in your backpack can be sold！\n";
             return;
         }
         vector<pair<string, int>> prices = {
@@ -84,16 +84,16 @@ void shop(Player& player, const Planet& planet) {
             for (const auto& price : prices) {
                 if (item == price.first) {
                     totalEarned += price.second;
-                    cout << "出售 " << item << " 获得 " << price.second << " 货币\n";
+                    cout << "sell " << item << " get " << price.second << " uni-coin\n";
                 }
             }
         }
         player.currency += totalEarned;
         if (totalEarned == 0) {
-            cout << "没有可出售的资源！\n";
+            cout << "You have no resources to sell！\n";
         }
         
-	// 更新背包
+	// update the backpack
         player.inventory.erase(
                 remove_if(player.inventory.begin(), player.inventory.end(),
                           [&](const string& item) {
@@ -103,6 +103,6 @@ void shop(Player& player, const Planet& planet) {
                 player.inventory.end()
         );
     } else if (choice != "3") {
-        cout << "无效选项！\n";
+        cout << "Invalid selection！\n";
     }
 }
