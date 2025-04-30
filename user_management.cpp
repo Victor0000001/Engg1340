@@ -4,7 +4,7 @@
 #include "user_management.h"
 using namespace std;
 
-// 检查用户名是否已存在
+// check if the username already exist
 bool usernameExists(const string& username) {
     ifstream file("users.txt");
     if (!file) {
@@ -40,7 +40,7 @@ void initializeUser(Player& player, string username, string password, string dif
     player.equipment.clear();
 }
 
-// 注册新用户
+// Register a new user
 void registerUser(Player& player) {
     string username, password, difficulty;
     while (true) {
@@ -74,7 +74,7 @@ void registerUser(Player& player) {
     file.close();
 }
 
-// 用户登录
+// user log in
 bool login(Player& player) {
     string username, password;
     cout << "Please enter a username：";
@@ -100,7 +100,7 @@ bool login(Player& player) {
             player.max_hp = max_hp;
             player.currency = currency;
             player.storage = storage;
-            player.autoLogin = false; // 登录后禁用自动登录
+            player.autoLogin = false; // Disable automatic login after login
 	    player.isGameComplete = isGameComplete;
             file.close();
             loadGame(player);
@@ -112,7 +112,7 @@ bool login(Player& player) {
     return false;
 }
 
-// 保存游戏数据
+// save the data
 void saveGame(const Player& player) {
     vector<string> lines;
     ifstream file("users.txt");
@@ -140,7 +140,7 @@ void saveGame(const Player& player) {
     }
     outFile.close();
 
-    // 保存背包和能源到 saves/ 目录
+    // Save backpack and energy to saves/ directory
     ofstream invFile(player.username + "_inventory.txt");
     for (const auto& item : player.inventory) {
         invFile << item << "\n";
@@ -151,7 +151,7 @@ void saveGame(const Player& player) {
     invFile.close();
 }
 
-// 加载游戏数据
+// loading game data
 void loadGame(Player& player) {
     ifstream invFile(player.username + "_inventory.txt");
     string item;
