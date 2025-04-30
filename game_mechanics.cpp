@@ -30,20 +30,20 @@ void displayPlanetBackground(const Planet& planet) {
 void displayCombatRules() {
     cout << "\n============================ Combat Rules ================================\n";
     cout << "You engage in turn-based combat with monsters, choosing the following actions each time：\n";
-    cout << "1. ATTACT（A）：\n";
+    cout << "1. ATTACK（A）：\n";
     cout << "   - Enemy Chooses Heal (H): Deals full damage (equal to your Attack Power).\n";
     cout << "   - Enemy Chooses Attack (A): Both deal 50% damage\n";
     cout << "   - Enemy Chooses Defend (D): Enemy parries - You take 25% ATK damage\n";
     cout << "   - 10% Critical Chance: +50% DMG\n";
     cout << "2. DEFEND（D）：\n";
-    cout << "   - Enemy Chooses Attack (A):Rebound! Enemy takes 25% of your ATK as damage.\n";
-    cout << "   - Enemy Chooses Heal (H):Restores 10% HP\n";
+    cout << "   - Enemy Chooses Attack (A): Rebound! Enemy takes 25% of your ATK as damage.\n";
+    cout << "   - Enemy Chooses Heal (H): Restores 10% HP\n";
     cout << "   - 10% Perfect Block Chance: 2x damage rebound。\n";
     cout << "3. HEAL（H）：Restores 10% of max HP.\n";
-    cout << "   - Enemy Chooses Defend (D):Healing effect triggered.\n";
-    cout << "   - Enemy Chooses Attack (A)：You take full damage from the Enemy.\n";
-    cout << "4. HEALING POTION（P）：Restores 50% of max HP (consumes 1 Healing Potion from inventory).\n";
-    cout << "5. ATTACK POTION（X）：Increases ATK by 50% for the entire battle (consumes 1 Attack Potion).\n";
+    cout << "   - Enemy Chooses Defend (D): Healing effect triggered.\n";
+    cout << "   - Enemy Chooses Attack (A):You take full damage from the Enemy.\n";
+    cout << "4. HEALING POTION（P）:Restores 50% of max HP (consumes 1 Healing Potion from inventory).\n";
+    cout << "5. ATTACK POTION（X）:Increases ATK by 50% for the entire battle (consumes 1 Attack Potion from inventory).\n";
     cout << "\n";
     cout << "Enemy randomly selects between [A]ttack, [D]efend, or [H]eal actions.";
     cout << "\n";
@@ -57,17 +57,17 @@ void displayRules() {
     cout << "\n============================ Game Rules ================================\n";
     cout << "\n";
     cout << "1. Navigation Rules: \n";
-    cout << "   - Initial access is limited to Sylvaris; subsequent planets unlock after completing planetary quests.\n";
+    cout << "   - Initial access is limited to Sylvaris; planets unlock subsequently after completing planetary quests.\n";
     cout << "   - Each planet features unique environments and effects. All quests must be completed before departure.\n";
     cout << "\n";
     cout << "2. Collection Rules: \n";
     cout << "   - Collection Methods: Gathering | Logging | Mining | Fishing.\n";
-    cout << "   - Collection Failure Chance (Per Attempt): \n";
-    cout << "   * Easy Mode: 5% failure rate\n";
-    cout << "   * Medium Mode: 10% failure rate\n";
-    cout << "   * Hard Mode: 20% failure rate\n";\n";
+    cout << "   - Collection Failure Rate (Per Attempt): \n";
+    cout << "   * Easy Mode: 5%\n";
+    cout << "   * Medium Mode: 10%\n";
+    cout << "   * Hard Mode: 20%\n";\n";
     cout << "   - 10% chance: Lucky event (resources doubled).\n";
-    cout << "   - Collection requires 2-3s wait.\n";
+    cout << "   - Collection requires 2-3s waiting time.\n";
     cout << "\n";
     cout << "3. Combat Rules: \n";
     displayCombatRules();
@@ -242,7 +242,7 @@ void combat(Player& player, Planet& planet) {
             if (it != player.inventory.end()) {
                 player.hp = min(player.max_hp, player.hp + player.max_hp / 2);
                 player.inventory.erase(it);
-                cout << "Combat Flow: You used a Healing Potion (P), restoring 50% of max HP（+" << player.max_hp / 2 << " HP）。\n";
+                cout << "You used a Healing Potion (P), restoring 50% of max HP（+" << player.max_hp / 2 << " HP）。\n";
                 continue;
             } else {
                 cout << "No Healing Potion in inventory!\n";
@@ -257,7 +257,7 @@ void combat(Player& player, Planet& planet) {
                 player.atk *= 1.5;
                 usedAttackPotion = true;
                 player.inventory.erase(it);
-                cout << "Attack Flow: You used a Power Potion (X), increasing ATK by 50%!\n";
+                cout << "You used a Attack Potion (X), increasing ATK by 50%!\n";
                 continue;
             } else {
                 cout << "No Attack Potion in inventory！\n";
@@ -279,18 +279,17 @@ void combat(Player& player, Planet& planet) {
             }
             continue;
         }
-        if (furnaceEffect) { //Burns
+        if (furnaceEffect) { //Burning
             player.hp -= 5;
             cout << "Burning effect! Loses 5 HP each turn.\n";
         }
         if (desolaraEffect) { //Radiation
             player.hp -= 5;
 	    player.atk = 9;
-            cout << "Radiation effect! Loses 5 HP and reduces ATK by 10% each turn.\n";
+            cout << "Radiation effect! Loses 5 HP each turn and reduces ATK by 10%.\n";
         }
 
         // Output player and monster actions
-        cout << "Combat Flow：\n";
         cout << "- You have chosen：";
         char playerAction = action.empty() ? 'A' : toupper(action[0]);
         switch (playerAction) {
@@ -329,7 +328,7 @@ void combat(Player& player, Planet& planet) {
         } else if (playerAction == 'A' && monsterAction == 'D') {
             int damage = player.atk / 4;
             player.hp -= damage;
-            cout << "- Enemy's defense reflects the attack. You take " << damage << " damage.\n";
+            cout << "- Enemy's defense parries the attack. You take " << damage << " damage.\n";
         } else if (playerAction == 'H' && monsterAction == 'D') {
             int heal = player.max_hp / 10;
             player.hp = min(player.max_hp, player.hp + heal);
@@ -341,9 +340,9 @@ void combat(Player& player, Planet& planet) {
             int damage = perfectBlock ? player.atk / 2 : player.atk / 4;
             monsterHp -= damage;
             if (perfectBlock) {
-                cout << "- Perfect Parry! Enemy is countered, taking " << damage << " damage.\n";
+                cout << "- Perfect Parry! Enemy takes " << damage << " damage.\n";
             } else {
-                cout << "- Enemy is reflected, taking " << damage << " damage.\n";
+                cout << "- Enemy is parried, taking " << damage << " damage.\n";
             }
         } else if (playerAction == 'D' && monsterAction == 'H') {
             int heal = maxMonsterHp / 10;
@@ -439,7 +438,7 @@ void initializePlanets(vector<Planet>& planets) {
                     {{"Desogrove", 2}, {"Arid Crystal", 3}, {"Ruins Warrior's Relic", 1}},
                     "Desolara，a desolate desert planet, with sandstorms sweeping across the land.\n"
                     "In the abandoned ruins, ancient treasures lie hidden, and rare plants grow tenaciously.\n",
-                    "In combats, if not equipped with armor, lose 5 health points and reduce attack power by 20% each turn.",
+                    "In combats, if not equipped with armor, lose 5 health points each turn and reduce attack power by 10%.",
 		    false
             }
     };
