@@ -74,7 +74,7 @@ void displayRules() {
     cout << "\n";
     cout << "4. Mission Rules：\n";
     cout << "   - Each planet has multiple quests requiring collection of specific items.\n";
-    cout << "   - Complete all quests to obtain Planet Energy.\n";
+    cout << "   - Complete all requests to obtain Planet Energy.\n";
     cout << "\n";
     cout << "5. Shop Rules:：\n";
     cout << "   - Available: Tools, Potions | Sell: Resources.\n";
