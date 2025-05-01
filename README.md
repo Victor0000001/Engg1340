@@ -10,7 +10,7 @@ Yao Yonghao     3036395243
 Zhu Chit Wai    3036390827
 
 Game Introduction:
-This is a 
+In the game "Star Energy Mystery," you're tasked with a crritical mission to save Earth from an energy crisis. You will go to four distinct planets, each with its unique challenges. Your main tasks are collecting rare energy sources, engaging in straregic combat, and gathering the four essential energies to synthesize endless energy. Your actions will determine Earth's future. Are you ready for the challenge?
 
 Game's Background:
 In the year 2147, Earth finds itself in the "Great Exhaustion Era." Fossil fuels have been completely depleted, controlled nuclear fusion technology has failed, and the global power grid has collapsed, leading to a state of rotating power supply in cities. The third resource war erupts, and the United Nations disintegrates. However, hope arises in 2150 with the discovery of the "Endless Energy" theory by quantum physicists. They uncover the "source-matter resonance" phenomenon, which proves that four extreme planetary environments can produce special energy crystals. In response to this groundbreaking discovery, the "Savior Plan" is launched in 2151. Agents, or player characters, are secretly selected and transformed. It is now up to the players to collect four different extreme energy sources to synthesize endless energy, with the ultimate goal of saving Earth from its energy crisis.
@@ -60,3 +60,15 @@ Bellow are the main rules of the game. Players must follow them to progress, com
 - Available for Purchase: Tools, Potions.
 - Available for Sale: Resources.
 - Advanced Tools: Unlock advanced tools on specific planets.
+
+Five requirement:
+1. Generation of random events:
+   When the player is in combat with a guardian, the guardian's behavior is random. Also, lucky events happen randomly.
+2. Data structures for storing data:
+   
+3. Dynamic memory management:
+
+4. File input/output:
+   
+5. Multiple Difficulty Levels:
+   There are three difficulty mode - Easy, Medium, and Hard. In different mode, the failure rates are different.
