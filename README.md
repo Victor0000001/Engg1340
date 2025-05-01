@@ -73,3 +73,6 @@ Five requirement:
    will also be saved in the corresponding file. When the players log into the game later, the previous saved file can be read out.
 5. Multiple Difficulty Levels:
    There are three difficulty mode - Easy, Medium, and Hard. In different mode, the failure rates are different.
+
+Non-standard Libraries:
+In this game, we create two files, user_management.h and game_mechanics.h, for non-standard library. user_management.h is mainly used to store player game data, and game_mechanics.h is used to build specific gameplay. The two .h files define a struct data structure and various functions used.
