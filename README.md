@@ -65,10 +65,11 @@ Five requirement:
 1. Generation of random events:
    When the player is in combat with a guardian, the guardian's behavior is random. Also, lucky events happen randomly.
 2. Data structures for storing data:
-   
+   The players' structure and the planets' structure in user_management.h and game_machanics.h files.
 3. Dynamic memory management:
-
+   When storing the data, we used the vector data structure.
 4. File input/output:
-   
+   When players register, we will store the player's username and password in a file. When the players play the game, their corresponding data 
+   will also be saved in the corresponding file. When the players log into the game later, the previous saved file can be read out.
 5. Multiple Difficulty Levels:
    There are three difficulty mode - Easy, Medium, and Hard. In different mode, the failure rates are different.
