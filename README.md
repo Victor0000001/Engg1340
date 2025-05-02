@@ -2,6 +2,7 @@
 Group 23 Group Project
 
 Group Members: 
+
 Han Jiale       3036390279
 Huang Hoi Yan   3036392473
 Li Louhanyu     3036392291
@@ -10,6 +11,7 @@ Yao Yonghao     3036395243
 Zhu Chit Wai    3036390827
 
 Game Introduction:
+
 In the game "Star Energy Mystery," you're tasked with a crritical mission to save Earth from an energy crisis. You will go to four distinct planets, each with its unique challenges. Your main tasks are collecting rare energy sources, engaging in straregic combat, and gathering the four essential energies to synthesize endless energy. Your actions will determine Earth's future. Are you ready for the challenge?
 
 Game's Background:
@@ -62,6 +64,7 @@ Bellow are the main rules of the game. Players must follow them to progress, com
 - Advanced Tools: Unlock advanced tools on specific planets.
 
 Five requirement:
+
 1. Generation of random events:
    When the player is in combat with a guardian, the guardian's behavior is random. Also, lucky events happen randomly.
 2. Data structures for storing data:
@@ -75,4 +78,5 @@ Five requirement:
    There are three difficulty mode - Easy, Medium, and Hard. In different mode, the failure rates are different.
 
 Non-standard Libraries:
+
 In this game, we create two files, user_management.h and game_mechanics.h, for non-standard library. user_management.h is mainly used to store player game data, and game_mechanics.h is used to build specific gameplay. The two .h files define a struct data structure and various functions used.
