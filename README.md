@@ -17,6 +17,10 @@ In the game "Star Energy Mystery," you're tasked with a crritical mission to sav
 Game's Background:
 In the year 2147, Earth finds itself in the "Great Exhaustion Era." Fossil fuels have been completely depleted, controlled nuclear fusion technology has failed, and the global power grid has collapsed, leading to a state of rotating power supply in cities. The third resource war erupts, and the United Nations disintegrates. However, hope arises in 2150 with the discovery of the "Endless Energy" theory by quantum physicists. They uncover the "source-matter resonance" phenomenon, which proves that four extreme planetary environments can produce special energy crystals. In response to this groundbreaking discovery, the "Savior Plan" is launched in 2151. Agents, or player characters, are secretly selected and transformed. It is now up to the players to collect four different extreme energy sources to synthesize endless energy, with the ultimate goal of saving Earth from its energy crisis.
 
+Compilation/Execution：
+
+Download all the files to Linux, create an executable main program by entering the “make main” command, and then run it through ./main. Players can make choices by entering the corresponding numbers of the options in the game; then they can play the game according to the rules.
+
 Game Rules:
 
 Bellow are the main rules of the game. Players must follow them to progress, complete quests, enhance their abilities, and unlock more content.
