@@ -196,189 +196,202 @@ void collectResources(Player& player, Planet& planet) {
 
 // Combat System
 void combat(Player& player, Planet& planet) {
-    // Choose whether to display rules
-    cout << "View combat rules?(y/n)：";
-    string viewRules;
-    getline(cin, viewRules);
-    if (viewRules == "y" || viewRules == "Y") {
-        displayCombatRules();
-    }
-
-    //Enemy attributes scale with game progress.
-    int monsterDifficulty=1;
-    if (planet.name=="Glaciora")
-        monsterDifficulty=1.2;
-    if (planet.name=="Pyroterra")
-        monsterDifficulty=1.3;
-    if (planet.name=="Desolara")
-        monsterDifficulty=1.5;
-
-    //Initialize enemy stats
-    int monsterAtk = (player.difficulty == "easy") ? 8 :
-                     (player.difficulty == "medium") ? 10 : 12;
-    monsterAtk *= monsterDifficulty;
-    int monsterHp = (player.difficulty == "easy") ? 80 :
-                    (player.difficulty == "medium") ? 100 : 120;
-    monsterHp *= monsterDifficulty;
-    int maxMonsterHp = monsterHp;
-
-    bool usedAttackPotion = false;
-    int originalAtk = player.atk;
-
-    //Combat
-    while (player.hp > 0 && monsterHp > 0) {
-        cout << "Current Status: Player HP: " << player.hp << ", Enemy HP: " << monsterHp << endl;
-        cout << "Choose action (A: Attack, H: Heal, D: Defend, P: Potion, X: Attack Potion): ";
-        string action;
-        getline(cin, action);
-
-        // Combat Effect
-        bool frozen = ((planet.name == "Glaciora") && (rand() % 100 < 50) && (find(player.inventory.begin(),player.inventory.end(),"Cold-resistant Suit")==player.inventory.end()));
-        bool furnaceEffect = ((planet.name == "Pyroterra") && (find(player.inventory.begin(),player.inventory.end(),"Heat-resistant Suit")==player.inventory.end()));
-        bool desolaraEffect = ((planet.name == "Desolara") && (find(player.inventory.begin(),player.inventory.end(),"Radiation-resistant Suit")==player.inventory.end()));
-
-        // Healing Potion
-        if (action == "P") {
-            auto it = find(player.inventory.begin(), player.inventory.end(), "Healing Potion");
-            if (it != player.inventory.end()) {
-                player.hp = min(player.max_hp, player.hp + player.max_hp / 2);
-                player.inventory.erase(it);
-                cout << "You used a Healing Potion (P), restoring 50% of max HP（+" << player.max_hp / 2 << " HP）。\n";
-                continue;
-            } else {
-                cout << "No Healing Potion in inventory!\n";
-                continue;
-            }
+    while (true) { // Outer loop for retrying combat
+        // Choose whether to display rules
+        cout << "View combat rules?(y/n)：";
+        string viewRules;
+        getline(cin, viewRules);
+        if (viewRules == "y" || viewRules == "Y") {
+            displayCombatRules();
         }
 
-        // Attack Potion
-        if (action == "X" && !usedAttackPotion) {
-            auto it = find(player.inventory.begin(), player.inventory.end(), "Attack Potion");
-            if (it != player.inventory.end()) {
-                player.atk *= 1.5;
-                usedAttackPotion = true;
-                player.inventory.erase(it);
-                cout << "You used a Attack Potion (X), increasing ATK by 50%!\n";
-                continue;
-            } else {
-                cout << "No Attack Potion in inventory！\n";
+        //Enemy attributes scale with game progress.
+        int monsterDifficulty=1;
+        if (planet.name=="Glaciora")
+            monsterDifficulty=1.2;
+        if (planet.name=="Pyroterra")
+            monsterDifficulty=1.3;
+        if (planet.name=="Desolara")
+            monsterDifficulty=1.5;
+
+        //Initialize enemy stats
+        int monsterAtk = (player.difficulty == "easy") ? 8 :
+                        (player.difficulty == "medium") ? 10 : 12;
+        monsterAtk *= monsterDifficulty;
+        int monsterHp = (player.difficulty == "easy") ? 80 :
+                       (player.difficulty == "medium") ? 100 : 120;
+        monsterHp *= monsterDifficulty;
+        int maxMonsterHp = monsterHp;
+
+        bool usedAttackPotion = false;
+        int originalAtk = player.atk;
+
+        //Combat loop
+        while (player.hp > 0 && monsterHp > 0) {
+            cout << "Current Status: Player HP: " << player.hp << ", Enemy HP: " << monsterHp << endl;
+            cout << "Choose action (A: Attack, H: Heal, D: Defend, P: Potion, X: Attack Potion): ";
+            string action;
+            getline(cin, action);
+
+            // Combat Effect
+            bool frozen = ((planet.name == "Glaciora") && (rand() % 100 < 50) && (find(player.inventory.begin(),player.inventory.end(),"Cold-resistant Suit")==player.inventory.end()));
+            bool furnaceEffect = ((planet.name == "Pyroterra") && (find(player.inventory.begin(),player.inventory.end(),"Heat-resistant Suit")==player.inventory.end()));
+            bool desolaraEffect = ((planet.name == "Desolara") && (find(player.inventory.begin(),player.inventory.end(),"Radiation-resistant Suit")==player.inventory.end()));
+
+            // Healing Potion
+            if (action == "P") {
+                auto it = find(player.inventory.begin(), player.inventory.end(), "Healing Potion");
+                if (it != player.inventory.end()) {
+                    player.hp = min(player.max_hp, player.hp + player.max_hp / 2);
+                    player.inventory.erase(it);
+                    cout << "You used a Healing Potion (P), restoring 50% of max HP（+" << player.max_hp / 2 << " HP）。\n";
+                    continue;
+                } else {
+                    cout << "No Healing Potion in inventory!\n";
+                    continue;
+                }
+            }
+
+            // Attack Potion
+            if (action == "X" && !usedAttackPotion) {
+                auto it = find(player.inventory.begin(), player.inventory.end(), "Attack Potion");
+                if (it != player.inventory.end()) {
+                    player.atk *= 1.5;
+                    usedAttackPotion = true;
+                    player.inventory.erase(it);
+                    cout << "You used a Attack Potion (X), increasing ATK by 50%!\n";
+                    continue;
+                } else {
+                    cout << "No Attack Potion in inventory！\n";
+                    continue;
+                }
+            }
+
+            // Enemy Action
+            char monsterAction = "AHD"[rand() % 3];
+
+            // Check Effects
+            if (frozen) { //Frozen
+                cout << "Freeze effect triggered! You cannot act this turn.\n";
+                cout << "- The Enemy chooses：";
+                switch (monsterAction) {
+                    case 'A': cout << "ATTACK（A）"; player.hp -= monsterAtk; cout << ", you take " << monsterAtk << " damage.\n"; break;
+                    case 'H': cout << "HEAL（H）"; monsterHp = min(maxMonsterHp, monsterHp + maxMonsterHp / 10); cout << ", Enemy recovery " << maxMonsterHp / 10 << " HP.\n"; break;
+                    case 'D': cout << "DEFEND（D）, no effect.\n"; break;
+                }
                 continue;
             }
-        }
+            if (furnaceEffect) { //Burning
+                player.hp -= 5;
+                cout << "Burning effect! Loses 5 HP each turn.\n";
+            }
+            if (desolaraEffect) { //Radiation
+                player.hp -= 5;
+                player.atk = 9;
+                cout << "Radiation effect! Loses 5 HP each turn and reduces ATK by 10%.\n";
+            }
 
-        // Enemy Action
-        char monsterAction = "AHD"[rand() % 3];
-
-        // Check Effects
-        if (frozen) { //Frozen
-            cout << "Freeze effect triggered! You cannot act this turn.\n";
-            cout << "- The Enemy chooses：";
+            // Output player and monster actions
+            cout << "- You have chosen：";
+            char playerAction = action.empty() ? 'A' : toupper(action[0]);
+            switch (playerAction) {
+                case 'A': cout << "ATTACK（A）"; break;
+                case 'H': cout << "HEAL（H）"; break;
+                case 'D': cout << "DEFEND（D）"; break;
+                default: cout << "INVALID ACTION (treated as an attack)."; playerAction = 'A'; break;
+            }
+            cout << "\n";
+            cout << "- Your Enemy have chosen ：";
             switch (monsterAction) {
-                case 'A': cout << "ATTACK（A）"; player.hp -= monsterAtk; cout << ", you take " << monsterAtk << " damage.\n"; break;
-                case 'H': cout << "HEAL（H）"; monsterHp = min(maxMonsterHp, monsterHp + maxMonsterHp / 10); cout << ", Enemy recovery " << maxMonsterHp / 10 << " HP.\n"; break;
-                case 'D': cout << "DEFEND（D）, no effect.\n"; break;
+                case 'A': cout << "ATTACK（A）"; break;
+                case 'H': cout << "HEAL（H）"; break;
+                case 'D': cout << "DEFEND（D）"; break;
             }
-            continue;
-        }
-        if (furnaceEffect) { //Burning
-            player.hp -= 5;
-            cout << "Burning effect! Loses 5 HP each turn.\n";
-        }
-        if (desolaraEffect) { //Radiation
-            player.hp -= 5;
-            player.atk = 9;
-            cout << "Radiation effect! Loses 5 HP each turn and reduces ATK by 10%.\n";
-        }
+            cout << "\n";
 
-        // Output player and monster actions
-        cout << "- You have chosen：";
-        char playerAction = action.empty() ? 'A' : toupper(action[0]);
-        switch (playerAction) {
-            case 'A': cout << "ATTACK（A）"; break;
-            case 'H': cout << "HEAL（H）"; break;
-            case 'D': cout << "DEFEND（D）"; break;
-            default: cout << "INVALID ACTION (treated as an attack)."; playerAction = 'A'; break;
-        }
-        cout << "\n";
-        cout << "- Your Enemy have chosen ：";
-        switch (monsterAction) {
-            case 'A': cout << "ATTACK（A）"; break;
-            case 'H': cout << "HEAL（H）"; break;
-            case 'D': cout << "DEFEND（D）"; break;
-        }
-        cout << "\n";
+            // Combat results
+            bool criticalHit = (playerAction == 'A' && rand() % 100 < 10);
+            bool perfectBlock = (playerAction == 'D' && monsterAction == 'A' && rand() % 100 < 10);
 
-        // Combat results
-        bool criticalHit = (playerAction == 'A' && rand() % 100 < 10);
-        bool perfectBlock = (playerAction == 'D' && monsterAction == 'A' && rand() % 100 < 10);
-
-        if (playerAction == 'A' && monsterAction == 'H') {
-            int damage = desolaraEffect ? player.atk / 2 : player.atk;
-            if (criticalHit) {
-                damage *= 1.5;
-                cout << "- Critical hit! Your attack deals " << damage << " damage.\n";
+            if (playerAction == 'A' && monsterAction == 'H') {
+                int damage = desolaraEffect ? player.atk / 2 : player.atk;
+                if (criticalHit) {
+                    damage *= 1.5;
+                    cout << "- Critical hit! Your attack deals " << damage << " damage.\n";
+                } else {
+                    cout << "- Your attack deals " << damage << " damage.\n";
+                }
+                monsterHp -= damage;
+            } else if (playerAction == 'A' && monsterAction == 'A') {
+                int playerDamage = desolaraEffect ? player.atk / 2 : player.atk;
+                player.hp -= monsterAtk;
+                monsterHp -= playerDamage;
+                cout << "- Double attack! You deal " << playerDamage << " damage to the enemy，Enemy deals " << monsterAtk << " damage to you.\n";
+            } else if (playerAction == 'A' && monsterAction == 'D') {
+                int damage = player.atk / 4;
+                player.hp -= damage;
+                cout << "- Enemy's defense parries the attack. You take " << damage << " damage.\n";
+            } else if (playerAction == 'H' && monsterAction == 'D') {
+                int heal = player.max_hp / 10;
+                player.hp = min(player.max_hp, player.hp + heal);
+                cout << "- Healed successfully. Restored " << heal << " HP。\n";
+            } else if (playerAction == 'H' && monsterAction == 'A') {
+                player.hp -= monsterAtk;
+                cout << "- Enemy attacks. You take " << monsterAtk << " damage.\n";
+            } else if (playerAction == 'D' && monsterAction == 'A') {
+                int damage = perfectBlock ? player.atk / 2 : player.atk / 4;
+                monsterHp -= damage;
+                if (perfectBlock) {
+                    cout << "- Perfect Parry! Enemy takes " << damage << " damage.\n";
+                } else {
+                    cout << "- Enemy is parried, taking " << damage << " damage.\n";
+                }
+            } else if (playerAction == 'D' && monsterAction == 'H') {
+                int heal = maxMonsterHp / 10;
+                monsterHp = min(maxMonsterHp, monsterHp + heal);
+                cout << "- Enemy heals, restoring " << heal << " HP.\n";
             } else {
-                cout << "- Your attack deals " << damage << " damage.\n";
+                cout << "- Both actions fail.\n";
             }
-            monsterHp -= damage;
-        } else if (playerAction == 'A' && monsterAction == 'A') {
-            int playerDamage = desolaraEffect ? player.atk / 2 : player.atk;
-            player.hp -= monsterAtk;
-            monsterHp -= playerDamage;
-            cout << "- Double attack! You deal " << playerDamage << " damage to the enemy，Enemy deals " << monsterAtk << " damage to you.\n";
-        } else if (playerAction == 'A' && monsterAction == 'D') {
-            int damage = player.atk / 4;
-            player.hp -= damage;
-            cout << "- Enemy's defense parries the attack. You take " << damage << " damage.\n";
-        } else if (playerAction == 'H' && monsterAction == 'D') {
-            int heal = player.max_hp / 10;
-            player.hp = min(player.max_hp, player.hp + heal);
-            cout << "- Healed successfully. Restored " << heal << " HP。\n";
-        } else if (playerAction == 'H' && monsterAction == 'A') {
-            player.hp -= monsterAtk;
-            cout << "- Enemy attacks. You take " << monsterAtk << " damage.\n";
-        } else if (playerAction == 'D' && monsterAction == 'A') {
-            int damage = perfectBlock ? player.atk / 2 : player.atk / 4;
-            monsterHp -= damage;
-            if (perfectBlock) {
-                cout << "- Perfect Parry! Enemy takes " << damage << " damage.\n";
-            } else {
-                cout << "- Enemy is parried, taking " << damage << " damage.\n";
+
+            // Check player's HP
+            if (player.hp <= 0) {
+                cout << "Your HP have dropped to 0, you are defeated!\n";
+                player.hp = player.max_hp;
+                player.atk = originalAtk; // Reset ATK
+                monsterHp = maxMonsterHp;
+                cout << "Would you like to retry the combat? (y/n): ";
+                string retryChoice;
+                getline(cin, retryChoice);
+                if (retryChoice != "y" && retryChoice != "Y") {
+                    return; // Exit combat if player doesn't want to retry
+                }
+                // If retrying, reset combat state and continue the outer loop
+                usedAttackPotion = false;
+                continue; // Restart combat loop
             }
-        } else if (playerAction == 'D' && monsterAction == 'H') {
-            int heal = maxMonsterHp / 10;
-            monsterHp = min(maxMonsterHp, monsterHp + heal);
-            cout << "- Enemy heals, restoring " << heal << " HP.\n";
-        } else {
-            cout << "- Both actions fail.\n";
         }
 
-        // Check player's HP.
-        if (player.hp <= 0) {
-            cout << "Your HP have dropped to 0, you are defeated!\n";
+        //Check if enemy's HP is below 0
+        if (monsterHp <= 0) {
+            cout << "Enemy's HP has dropped to 0, you win!\n";
+            cout << "Acquired drop: " << planet.combat_item << endl;
+            player.inventory.push_back(planet.combat_item);
+            player.atk = originalAtk; // Reset ATK
             player.hp = player.max_hp;
-            player.atk = originalAtk; // Initialize ATK
-            return;
+            return; // Exit combat after victory
         }
     }
-
-    //Check if enemy's HK is below 0.
-    if (monsterHp <= 0) {
-        cout << "Enemy's HP has dropped to 0, you win!\n";
-        cout << "Acquired drop: " << planet.combat_item << endl;
-        player.inventory.push_back(planet.combat_item);
-    }
-    player.atk = originalAtk; // Reset ATK.
 }
 
-// Display mission progress.
+// Display mission progress
 void showTasks(const Planet& planet, Player& player) {
-    // Missions on this planet have been completed.
+    // Missions on this planet have been completed
     if (planet.isTaskDone) {
         cout << "The task of this planet is done!\n";
         return;
     }
-    //Missions on this planet are not yet complete.
+    //Missions on this planet are not yet complete
     cout << "\n" << "Missions in" << planet.name << "：\n";
     for (const auto& task : planet.tasks) {
         int count = count_if(player.inventory.begin(), player.inventory.end(),
@@ -387,7 +400,7 @@ void showTasks(const Planet& planet, Player& player) {
     }
 }
 
-// Check if all missions are complete.
+// Check if all missions are complete
 bool checkTasksCompleted(const Planet& planet, const Player& player) {
     for (const auto& task : planet.tasks) {
         int count = count_if(player.inventory.begin(), player.inventory.end(),
@@ -399,7 +412,7 @@ bool checkTasksCompleted(const Planet& planet, const Player& player) {
     return true;
 }
 
-// Initialize planet data.
+// Initialize planet data
 void initializePlanets(vector<Planet>& planets) {
     planets = {
             {
