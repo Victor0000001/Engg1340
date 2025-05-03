@@ -65,7 +65,7 @@ void displayRules() {
     cout << "   - Collection Failure Rate (Per Attempt): \n";
     cout << "   * Easy Mode: 5%\n";
     cout << "   * Medium Mode: 10%\n";
-    cout << "   * Hard Mode: 20%\n";\n";
+    cout << "   * Hard Mode: 20%\n";
     cout << "   - 10% chance: Lucky event (resources doubled).\n";
     cout << "   - Collection requires 2-3s waiting time.\n";
     cout << "\n";
@@ -97,35 +97,35 @@ void collectResources(Player& player, Planet& planet) {
     if (planet.name=="Sylvaris") {
         if ((find(player.inventory.begin(),player.inventory.end(),"Axe")!=player.inventory.end()) || (find(player.inventory.begin(),player.inventory.end(),"Heat-resistant Axe")!=player.inventory.end())) {
             isAction2=true;
-	}
-	if ((find(player.inventory.begin(),player.inventory.end(),"Pickaxe")!=player.inventory.end()) || (find(player.inventory.begin(),player.inventory.end(),"Cold-resistant Pickaxe")!=player.inventory.end()) || (find(player.inventory.begin(),player.inventory.end(),"Heat-resistant Pickaxe")!=player.inventory.end()) || (find(player.inventory.begin(),player.inventory.end(),"Alloy Drill")!=player.inventory.end())) {
+        }
+        if ((find(player.inventory.begin(),player.inventory.end(),"Pickaxe")!=player.inventory.end()) || (find(player.inventory.begin(),player.inventory.end(),"Cold-resistant Pickaxe")!=player.inventory.end()) || (find(player.inventory.begin(),player.inventory.end(),"Heat-resistant Pickaxe")!=player.inventory.end()) || (find(player.inventory.begin(),player.inventory.end(),"Alloy Drill")!=player.inventory.end())) {
             isAction3=true;
         }
-	if ((find(player.inventory.begin(),player.inventory.end(),"Fishing Rod")!=player.inventory.end()) || (find(player.inventory.begin(),player.inventory.end(),"Ice Fishing Rod")!=player.inventory.end())) {
+        if ((find(player.inventory.begin(),player.inventory.end(),"Fishing Rod")!=player.inventory.end()) || (find(player.inventory.begin(),player.inventory.end(),"Ice Fishing Rod")!=player.inventory.end())) {
             isAction4=true;
         }
     } else if (planet.name=="Glaciora") {
         if ((find(player.inventory.begin(),player.inventory.end(),"Axe")!=player.inventory.end()) || (find(player.inventory.begin(),player.inventory.end(),"Heat-resistant Axe")!=player.inventory.end())) {
-	    isAction2=true;
-	}
+            isAction2=true;
+        }
         if (find(player.inventory.begin(),player.inventory.end(),"Cold-resistant Pickaxe")!=player.inventory.end()) {
             isAction3=true;
         }
-	if (find(player.inventory.begin(),player.inventory.end(),"Ice Fishing Rod")!=player.inventory.end()) {
+        if (find(player.inventory.begin(),player.inventory.end(),"Ice Fishing Rod")!=player.inventory.end()) {
             isAction4=true;
         }
     } else if (planet.name=="Pyroterra") {
         if ((find(player.inventory.begin(),player.inventory.end(),"Fishing Rod")!=player.inventory.end()) || (find(player.inventory.begin(),player.inventory.end(),"Ice Fishing Rod")!=player.inventory.end())) {
             isAction4=true;
-	}
+        }
         if (find(player.inventory.begin(),player.inventory.end(),"Heat-resistant Axe")!=player.inventory.end()) {
             isAction2=true;
         }
-	if (find(player.inventory.begin(),player.inventory.end(),"Heat-resistant Pickaxe")!=player.inventory.end()) {
+        if (find(player.inventory.begin(),player.inventory.end(),"Heat-resistant Pickaxe")!=player.inventory.end()) {
             isAction3=true;
         }
-	if ((find(player.inventory.begin(),player.inventory.end(),"Fishing Rod")!=player.inventory.end()) || (find(player.inventory.begin(),player.inventory.end(),"Ice Fishing Rod")!=player.inventory.end())) {
-	    isAction4=true;
+        if ((find(player.inventory.begin(),player.inventory.end(),"Fishing Rod")!=player.inventory.end()) || (find(player.inventory.begin(),player.inventory.end(),"Ice Fishing Rod")!=player.inventory.end())) {
+            isAction4=true;
         }
     } else if (planet.name=="Desolara") {
         if ((find(player.inventory.begin(),player.inventory.end(),"Axe")!=player.inventory.end()) || (find(player.inventory.begin(),player.inventory.end(),"Heat-resistant Axe")!=player.inventory.end())) {
@@ -134,7 +134,7 @@ void collectResources(Player& player, Planet& planet) {
         if (find(player.inventory.begin(),player.inventory.end(),"Alloy Drill")!=player.inventory.end()) {
             isAction3=true;
         }
-	if ((find(player.inventory.begin(),player.inventory.end(),"Fishing Rod")!=player.inventory.end()) || (find(player.inventory.begin(),player.inventory.end(),"Ice Fishing Rod")!=player.inventory.end())) {
+        if ((find(player.inventory.begin(),player.inventory.end(),"Fishing Rod")!=player.inventory.end()) || (find(player.inventory.begin(),player.inventory.end(),"Ice Fishing Rod")!=player.inventory.end())) {
             isAction4=true;
         }
     }
@@ -144,10 +144,10 @@ void collectResources(Player& player, Planet& planet) {
         resource = planet.resources[0];
         animation = "Harvesting " + resource + "...\n";
     } else if (action == "2") {
-    	if (!isAction2) { //Logging
+        if (!isAction2) { //Logging
             cout << "You lack the proper tool for chopping! \n";
-	    return;
-	}
+            return;
+        }
         resource = planet.resources[1];
         animation = "Chopping " + resource + "...\n";
     } else if (action == "3") { //Mining
@@ -171,7 +171,7 @@ void collectResources(Player& player, Planet& planet) {
 
     typeText(animation, 50);
     this_thread::sleep_for(chrono::seconds(2 + rand() % 2)); // 2-3 second delay
-    
+
     // Collection Success Rate
     int successRate = (player.difficulty == "easy") ? 95 : (player.difficulty == "medium") ? 90 : 80;
     bool luckyEvent = (rand() % 100) < 10;
@@ -184,7 +184,7 @@ void collectResources(Player& player, Planet& planet) {
                 cout << "Successfully Collected:" << resource << endl;
             }
         }
-	// Whether the lucky event is triggered
+        // Whether the lucky event is triggered
         if (luckyEvent) {
             cout << "Blessing of the Goddess of Fortune! Resources doubled!\n";
         }
@@ -223,7 +223,7 @@ void combat(Player& player, Planet& planet) {
 
     bool usedAttackPotion = false;
     int originalAtk = player.atk;
-    
+
     //Combat
     while (player.hp > 0 && monsterHp > 0) {
         cout << "Current Status: Player HP: " << player.hp << ", Enemy HP: " << monsterHp << endl;
@@ -233,9 +233,9 @@ void combat(Player& player, Planet& planet) {
 
         // Combat Effect
         bool frozen = ((planet.name == "Glaciora") && (rand() % 100 < 50) && (find(player.inventory.begin(),player.inventory.end(),"Cold-resistant Suit")==player.inventory.end()));
-	bool furnaceEffect = ((planet.name == "Pyroterra") && (find(player.inventory.begin(),player.inventory.end(),"Heat-resistant Suit")==player.inventory.end()));
-	bool desolaraEffect = ((planet.name == "Desolara") && (find(player.inventory.begin(),player.inventory.end(),"Radiation-resistant Suit")==player.inventory.end()));
-	
+        bool furnaceEffect = ((planet.name == "Pyroterra") && (find(player.inventory.begin(),player.inventory.end(),"Heat-resistant Suit")==player.inventory.end()));
+        bool desolaraEffect = ((planet.name == "Desolara") && (find(player.inventory.begin(),player.inventory.end(),"Radiation-resistant Suit")==player.inventory.end()));
+
         // Healing Potion
         if (action == "P") {
             auto it = find(player.inventory.begin(), player.inventory.end(), "Healing Potion");
@@ -285,7 +285,7 @@ void combat(Player& player, Planet& planet) {
         }
         if (desolaraEffect) { //Radiation
             player.hp -= 5;
-	    player.atk = 9;
+            player.atk = 9;
             cout << "Radiation effect! Loses 5 HP each turn and reduces ATK by 10%.\n";
         }
 
@@ -360,7 +360,7 @@ void combat(Player& player, Planet& planet) {
             return;
         }
     }
-    
+
     //Check if enemy's HK is below 0.
     if (monsterHp <= 0) {
         cout << "Enemy's HP has dropped to 0, you win!\n";
@@ -409,7 +409,7 @@ void initializePlanets(vector<Planet>& planets) {
                     "Sylvaris, a lush forest planet, where the air is filled with the scent of flowers.\n"
                     "Towering trees block out the sun, and streams shimmer with schools of fish glowing strangely. \n",
                     "No special effects.",
-		    false
+                    false
             },
             {
                     "Glaciora",
@@ -419,7 +419,7 @@ void initializePlanets(vector<Planet>& planets) {
                     "Glaciora，a frozen tundra, with piercing cold winds. \n"
                     "Precious minerals lie hidden beneath the ice, and rare fish swim in the lakes.\n",
                     "In combats, without armor equipped, there's a 50% chance of being frozen, skipping your turn.",
-		    false
+                    false
             },
             {
                     "Pyroterra",
@@ -429,7 +429,7 @@ void initializePlanets(vector<Planet>& planets) {
                     "Pyroterra，a scorching volcanic planet, with cracks in the ground spewing flames.\n"
                     "The lava rivers hold precious ores, and the blazing lakes are home to unique fish species.\n",
                     "In combats, without armor equipped, lose 5 health points per turn.",
-		    false
+                    false
             },
             {
                     "Desolara",
@@ -439,7 +439,7 @@ void initializePlanets(vector<Planet>& planets) {
                     "Desolara，a desolate desert planet, with sandstorms sweeping across the land.\n"
                     "In the abandoned ruins, ancient treasures lie hidden, and rare plants grow tenaciously.\n",
                     "In combats, if not equipped with armor, lose 5 health points each turn and reduce attack power by 10%.",
-		    false
+                    false
             }
     };
 }
