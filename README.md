@@ -69,7 +69,7 @@ Bellow are the main rules of the game. Players must follow them to progress, com
 - Available for Sale: Resources.
 - Advanced Tools: Unlock advanced tools on specific planets.
 
-Five requirement:
+Five requirements:
 
 1. Generation of random events:
    When the player is in combat with a guardian, the guardian's behavior is random. Also, lucky events happen randomly.
