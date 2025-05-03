@@ -39,7 +39,24 @@ void shop(Player& player, const Planet& planet) {
         
 	//show the price of the products
         for (int i = 0; i < items.size(); i++) {
-            cout << i + 1 << ". " << items[i].first << " (" << items[i].second << " uni-coin)\n";
+            cout << i + 1 << ". " << items[i].first << " (" << items[i].second << " uni-coin)";
+            // Add explanation based on item name
+            if (items[i].first == "Pickaxe" || items[i].first == "Cold-resistant Pickaxe" || 
+                items[i].first == "Heat-resistant Pickaxe" || items[i].first == "Alloy Drill") {
+                cout << " - for mining";
+            } else if (items[i].first == "Fishing Rod" || items[i].first == "Ice Fishing Rod") {
+                cout << " - for fishing";
+            } else if (items[i].first == "Axe" || items[i].first == "Heat-resistant Axe") {
+                cout << " - for logging";
+            } else if (items[i].first == "Healing Potion") {
+                cout << " - restores 50% HP";
+            } else if (items[i].first == "Attack Potion") {
+                cout << " - increases ATK by 50%";
+            } else if (items[i].first == "Cold-resistant Suit" || items[i].first == "Heat-resistant Suit" || 
+                       items[i].first == "Radiation-resistant Suit") {
+                cout << " - protects against planet effects";
+            }
+            cout << "\n";
         }
 	cout << items.size()+1 << ". Exit shop\n";
         
