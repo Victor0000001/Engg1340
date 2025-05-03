@@ -196,14 +196,13 @@ void collectResources(Player& player, Planet& planet) {
 
 // Combat System
 void combat(Player& player, Planet& planet) {
-    while (true) { // Outer loop for retrying combat
-        // Choose whether to display rules
-        cout << "View combat rules?(y/n)：";
+    cout << "View combat rules?(y/n)：";
         string viewRules;
         getline(cin, viewRules);
         if (viewRules == "y" || viewRules == "Y") {
             displayCombatRules();
         }
+    while (true) { // Outer loop for retrying combat
 
         //Enemy attributes scale with game progress.
         int monsterDifficulty=1;
@@ -359,16 +358,8 @@ void combat(Player& player, Planet& planet) {
                 cout << "Your HP have dropped to 0, you are defeated!\n";
                 player.hp = player.max_hp;
                 player.atk = originalAtk; // Reset ATK
-                monsterHp = maxMonsterHp;
-                cout << "Would you like to retry the combat? (y/n): ";
-                string retryChoice;
-                getline(cin, retryChoice);
-                if (retryChoice != "y" && retryChoice != "Y") {
-                    return; // Exit combat if player doesn't want to retry
-                }
-                // If retrying, reset combat state and continue the outer loop
-                usedAttackPotion = false;
-                continue; // Restart combat loop
+                return; // Exit combat
+                
             }
         }
 
