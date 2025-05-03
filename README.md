@@ -54,8 +54,8 @@ Bellow are the main rules of the game. Players must follow them to progress, com
      - Enemy Chooses Attack (A): You take full damage from the Enemy.
   4. Healing Potion (P): Restores 50% of max HP (consumes 1 Healing Potion from inventory).
   5. Attack Potion (X): Increases ATK by 50% for the entire battle (consumes 1 Attack Potion).
+  6. Other inputs will automatically regarded as Attack(A)
 
-!!! All invalid inputs during combat will be defaulted to Attack(A) !!! 
 - Enemy Actions: The enemy randomly selects between Attack (A), Defend (D), or Heal (H).
 - Victory Condition: Reduce enemy HP to 0 and claim dropped items.
 - Defeat Condition: Your HP reaches 0 - Full health restored, battle ends.
