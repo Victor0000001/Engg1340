@@ -44,7 +44,7 @@ void displayCombatRules() {
     cout << "   - Enemy Chooses Attack (A):You take full damage from the Enemy.\n";
     cout << "4. HEALING POTION（P）:Restores 50% of max HP (consumes 1 Healing Potion from inventory).\n";
     cout << "5. ATTACK POTION（X）:Increases ATK by 50% for the entire battle (consumes 1 Attack Potion from inventory).\n";
-    cout << "6. Other inputs will be automatically regarded as Attack (A).\n"
+    cout << "6. Other inputs will be automatically regarded as Attack (A).\n";
     cout << "\n";
     cout << "Enemy randomly selects between [A]ttack, [D]efend, or [H]eal actions.";
     cout << "\n";
